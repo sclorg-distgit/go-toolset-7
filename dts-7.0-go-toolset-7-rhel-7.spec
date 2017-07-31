@@ -8,9 +8,9 @@
 Summary: Package that installs %scl
 Name: %scl
 Version: 1.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
-#Requires: %{scl}-golang
+Requires: %{scl}-golang
 BuildRequires: scl-utils-build
 
 %description
@@ -67,5 +67,8 @@ EOF
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
-* Wed May 10 2017 Jakub Čajka jcajka@redhat.com 1-1
+* Thu Jun 15 2017 Jakub Čajka jcajka@redhat.com 1.8-2
+- regular build
+
+* Wed May 10 2017 Jakub Čajka jcajka@redhat.com 1.8-1
 - Initial package
