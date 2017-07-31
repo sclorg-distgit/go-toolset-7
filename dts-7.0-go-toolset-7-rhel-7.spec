@@ -1,4 +1,5 @@
 %global scl_name_base go-toolset
+%global scl_name_base_rpm go_toolset
 %global scl_name_version 7
 
 %global scl %{scl_name_base}-%{scl_name_version}
@@ -8,8 +9,9 @@
 Summary: Package that installs %scl
 Name: %scl
 Version: 1.8
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
+ExclusiveArch:x86_64 aarch64 ppc64le s390x
 Requires: %{scl}-golang
 BuildRequires: scl-utils-build
 
@@ -52,7 +54,7 @@ EOF
 
 # This is only needed when you want to provide an optional scldevel subpackage
 cat >> %{buildroot}%{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel << EOF
-%%scl_%{scl_name_base} %{scl}
+%%scl_%{scl_name_base_rpm} %{scl}
 EOF
 
 %files
@@ -67,6 +69,13 @@ EOF
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Thu Jun 29 2017 Jakub Čajka jcajka@redhat.com 1.8-4
+- add ExclusiveArches
+- Resolves: BZ#1466199
+
+* Wed Jun 21 2017 Jakub Čajka jcajka@redhat.com 1.8-3
+- fix macro definition
+
 * Thu Jun 15 2017 Jakub Čajka jcajka@redhat.com 1.8-2
 - regular build
 
