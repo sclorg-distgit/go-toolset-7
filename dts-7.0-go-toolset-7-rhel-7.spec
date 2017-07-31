@@ -1,5 +1,4 @@
 %global scl_name_base go-toolset
-%global scl_name_base_rpm go_toolset
 %global scl_name_version 7
 
 %global scl %{scl_name_base}-%{scl_name_version}
@@ -9,9 +8,9 @@
 Summary: Package that installs %scl
 Name: %scl
 Version: 1.8
-Release: 3%{?dist}
+Release: 1%{?dist}
 License: GPLv2+
-Requires: %{scl}-golang
+#Requires: %{scl}-golang
 BuildRequires: scl-utils-build
 
 %description
@@ -53,7 +52,7 @@ EOF
 
 # This is only needed when you want to provide an optional scldevel subpackage
 cat >> %{buildroot}%{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel << EOF
-%%scl_%{scl_name_base_rpm} %{scl}
+%%scl_%{scl_name_base} %{scl}
 EOF
 
 %files
@@ -68,11 +67,5 @@ EOF
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
-* Wed Jun 21 2017 Jakub Čajka jcajka@redhat.com 1.8-3
-- fix macro definition
-
-* Thu Jun 15 2017 Jakub Čajka jcajka@redhat.com 1.8-2
-- regular build
-
-* Wed May 10 2017 Jakub Čajka jcajka@redhat.com 1.8-1
+* Wed May 10 2017 Jakub Čajka jcajka@redhat.com 1-1
 - Initial package
