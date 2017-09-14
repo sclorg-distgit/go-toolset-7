@@ -11,9 +11,16 @@
 Summary: Package that installs %scl
 Name: %scl
 Version: 1.8
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPLv2+
 ExclusiveArch:x86_64 aarch64 ppc64le s390x
+
+# How to generate dockerfile tarbal:
+# rhpkg clone go-toolset-7-docker
+# cd go-toolset-7-docker
+# git archive --prefix=go-toolset-7-docker/ -o go-toolset-7-docker-`git rev-parse --short HEAD`.tar.gz HEAD
+Source0: %{scl_prefix}docker-b3e735c.tar.gz
+
 Requires: %{scl}-golang
 BuildRequires: scl-utils-build
 
@@ -49,10 +56,16 @@ This package provides a set of example Dockerfiles that can be used
 with go-toolset.
 
 %prep
-%setup -c -T
+%setup -c -T -a 0
 
 %install
 %scl_install
+
+install -d %{buildroot}%{dockerfiledir}
+install -d -p -m 755 %{buildroot}%{dockerfiledir}/rhel7
+install -d -p -m 755 %{buildroot}%{dockerfiledir}/rhel7/%{scl_prefix}docker
+cp -a %{scl_prefix}docker %{buildroot}%{dockerfiledir}/rhel7
+
 cat >> %{buildroot}%{_scl_scripts}/enable << EOF
 export PATH="%{_bindir}:%{_sbindir}\${PATH:+:\${PATH}}"
 export LD_LIBRARY_PATH="%{_libdir}\${LD_LIBRARY_PATH:+:\${LD_LIBRARY_PATH}}"
@@ -75,11 +88,15 @@ EOF
 %{_root_sysconfdir}/rpm/macros.%{scl}-config
 
 %files dockerfiles
+%{dockerfiledir}
 
 %files scldevel
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Wed Aug 09 2017 Tom Stellard <tstellar@redhat.com> - 1.8-6
+- Add dockerfiles
+
 * Wed Aug 09 2017 Tom Stellard <tstellar@redhat.com> - 1.8-5
 - Add stub dockerfiles sub-package
 
