@@ -6,10 +6,12 @@
 
 %scl_package %scl
 
+%global dockerfiledir %{_datadir}/%{scl_prefix}dockerfiles
+
 Summary: Package that installs %scl
 Name: %scl
 Version: 1.8
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2+
 ExclusiveArch:x86_64 aarch64 ppc64le s390x
 Requires: %{scl}-golang
@@ -39,6 +41,13 @@ Summary: Package shipping development files for %scl
 Package shipping development files, especially useful for development of
 packages depending on %scl Software Collection.
 
+%package dockerfiles
+Summary: Package shipping Dockerfiles for go-toolset
+
+%description dockerfiles
+This package provides a set of example Dockerfiles that can be used
+with go-toolset.
+
 %prep
 %setup -c -T
 
@@ -65,10 +74,15 @@ EOF
 %files build
 %{_root_sysconfdir}/rpm/macros.%{scl}-config
 
+%files dockerfiles
+
 %files scldevel
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Wed Aug 09 2017 Tom Stellard <tstellar@redhat.com> - 1.8-5
+- Add stub dockerfiles sub-package
+
 * Thu Jun 29 2017 Jakub Čajka jcajka@redhat.com 1.8-4
 - add ExclusiveArches
 - Resolves: BZ#1466199
